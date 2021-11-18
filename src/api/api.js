@@ -1,8 +1,8 @@
 // const API_KEY = 'api_key=41ded1b2e567bbba63fba906ccc11068'
 const API_KEY = '41ded1b2e567bbba63fba906ccc11068'
 
-export function getMoviesList(page = 1, setMovies, setError, setIsLoaded) {
-  const URL = `http://api.themoviedb.org/3/discover/movie?page=${page}&api_key=${API_KEY}`
+export function getMoviesList(page = 1, sorted, setMovies, setError, setIsLoaded) {
+  const URL = `http://api.themoviedb.org/3/discover/movie?page=${page}&sort_by=${sorted}&api_key=${API_KEY}`
 
   fetch(URL)
     .then(data =>
@@ -12,7 +12,11 @@ export function getMoviesList(page = 1, setMovies, setError, setIsLoaded) {
     )
     .then(json => {
       // console.log(json)
-
+      // setTimeout(() => {
+      //   setMovies(json)
+      //   setIsLoaded(true)
+      //   setError(false)
+      // }, 1500)
       setMovies(json)
       setIsLoaded(true)
       setError(false)
