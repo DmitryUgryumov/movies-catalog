@@ -39,7 +39,7 @@ const MovieCard = ({ movie }) => {
     <>
       <div className='movie-card__link'>
         <Link to={`/movie/${movie.id}`}>
-          <div className='movie-card__img-container'>
+          <div className='movie-card__img-container' >
             <img src={poster} alt='movie' className='movie-card__poster'/>
             <p className='movie-card__vote-average' style={{ borderColor:voteColor }}>{ movie.vote_average }</p>
           </div>

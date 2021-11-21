@@ -57,11 +57,15 @@ html {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.2);
 }
 
 .movie-card__link a {
   color: black;
   text-decoration: none;
+}
+.movie-card__link a:hover {
+  color: mediumblue;
 }
 
 .movie-card__img-container {
@@ -97,9 +101,6 @@ html {
   margin-top: 35px;
   text-align: left;
   padding: 0 10px;
-}
-.movie-card__title:hover {
-  color: mediumblue;
 }
 
 .movie-card__date {
@@ -251,14 +252,14 @@ html {
   display: flex;
   justify-content: left;
   flex-wrap: wrap;
-  gap: 30px 5%;
+  gap: 30px 4%;
   margin-top: 20px;
   height: 0;
   overflow-y: hidden;
 }
 
 .actors__li {
-  flex-basis: 30%;
+  flex-basis: 22%;
   position: relative;
 }
 .actors__li:hover a p {
@@ -491,6 +492,7 @@ html {
 
   .info__description {
     flex-basis: auto;
+    padding: 0;
   }
 }
 @media (max-width: 768px) {
@@ -500,6 +502,21 @@ html {
 
   .movies__item, .movie-card {
     flex-basis: 45%;
+  }
+
+  .actors__list {
+    display: flex;
+    justify-content: left;
+    flex-wrap: wrap;
+    gap: 30px 5%;
+    margin-top: 20px;
+    height: 0;
+    overflow-y: hidden;
+  }
+
+  .actors__li {
+    flex-basis: 30%;
+    position: relative;
   }
 
   .actors__name {

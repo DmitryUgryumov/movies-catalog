@@ -11,45 +11,41 @@ const MoviesCatalog = () => {
   const [movies, setMovies] = useState([])
   const [error, setError] = useState(false)
   const [isLoaded, setIsLoaded] = useState(false)
+  const [page, setPage] = useState(sessionStorage.getItem('page') ? +sessionStorage.getItem('page') : 1)
+
   // const [filters, setFilters] = useState([])
 
   const [sortedItems, setSortedItems] = useState([
-    {id: 1, description: 'popularity', requestValue: 'popularity.desc', checked: true},
+    {id: 1, description: 'popularity', requestValue: 'popularity.desc', checked: true}, //default sorting
     {id: 2, description: 'vote average', requestValue: 'vote_average.desc&vote_count.gte=1000', checked: false},
     {id: 3, description: 'vote count', requestValue: 'vote_count.desc', checked: false},
     {id: 4, description: 'release date', requestValue: `primary_release_date.desc&primary_release_date.lte=2021-11-18&vote_count.gte=50`, checked: false}
   ])
+  const [sorted, setSorted] = useState(sessionStorage.getItem('sorted') ? sessionStorage.getItem('sorted') : 'popularity.desc')
 
-  const [sorted, setSorted] = useState('popularity.desc')
-  const [page, setPage] = useState(sessionStorage.getItem('page') ? +sessionStorage.getItem('page') : 1)
 
   useEffect(() => {
-    // console.log( sessionStorage.getItem('page') )
     getMoviesList(page, sorted, setMovies, setError, setIsLoaded)
+    setSortedItems(prev => prev.map(item => item.requestValue === sorted ? {...item, checked:true} : {...item, checked:false}))
+    console.log('request')
   }, [])
 
+
   useEffect(() => sessionStorage.setItem('page', page.toString()), [page])
+  // useEffect(() => sessionStorage.setItem('scroll', scroll.toString()), [scroll])
+
 
   function changeSort(id) {
     const newSorted = sortedItems.filter(item => item.id.toString() === id)[0].requestValue
 
-    console.log(newSorted)
+    sessionStorage.setItem('sorted', newSorted)
 
     setSorted(newSorted)
     setIsLoaded(false)
+    setPage(1)
 
-    getMoviesList(page, newSorted, setMovies, setError, setIsLoaded)
+    getMoviesList(1, newSorted, setMovies, setError, setIsLoaded)
   }
-
-  // useEffect(() => {
-  //   console.log(true)
-  //   const newSorted = sortedItems.filter(item => item.checked)[0].requestValue
-  //
-  //   setSorted(newSorted)
-  //   setIsLoaded(false)
-  //
-  //   getMoviesList(page, newSorted, setMovies, setError, setIsLoaded)
-  // }, [sortedItems])
 
 
   const pageNext = () => {
