@@ -36,6 +36,43 @@ html {
   height: auto;
 }
 
+.filters {
+  margin-top: 30px;
+}
+
+.sorted, .genres {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.sorted p, .genres p {
+  flex-basis: 10%;
+}
+
+.sorted__ul, .genres__ul {
+  margin-left: 50px;
+  display: flex;
+  justify-content: left;
+  flex-basis: 80%;
+  flex-wrap: wrap;
+  gap: 10px 0;
+}
+.sorted__ul li, .genres__ul li {
+  flex-basis: 25%;
+}
+.sorted__ul li input, .genres__ul li input {
+  cursor: pointer;
+}
+.sorted__ul li label, .genres__ul li label {
+  padding-left: 15px;
+  cursor: pointer;
+}
+
+.genres {
+  margin-top: 30px;
+}
+
 .movies {
   max-width: 1200px;
   margin: 0 auto;

@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
 
+*{
+  
+}
+
+
 * {
   margin: 0;
   padding: 0;
@@ -39,6 +44,54 @@ html {
   max-width: 30px;
   height: auto;
 }
+
+// filters styles starts
+.filters {
+  margin-top: 30px;
+}
+
+.sorted, .genres {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 900px;
+  margin: 0 auto;
+
+  p {
+    flex-basis: 10%;
+  }
+}
+
+
+.sorted__ul, .genres__ul {
+  margin-left: 50px;
+  display: flex;
+  justify-content: left;
+  flex-basis: 80%;
+  flex-wrap: wrap;
+  gap: 10px 0;
+
+  li {
+    flex-basis: 25%;
+
+    input {
+      cursor: pointer;
+    }
+
+    label {
+      padding-left: 15px;
+      cursor: pointer;
+    }
+  }
+}
+
+.genres{
+  margin-top: 30px;
+}
+
+// filters styles ends
+
+
+
 // movies styles starts
 .movies {
   max-width: 1200px;

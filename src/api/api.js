@@ -1,8 +1,17 @@
 // const API_KEY = 'api_key=41ded1b2e567bbba63fba906ccc11068'
 const API_KEY = '41ded1b2e567bbba63fba906ccc11068'
 
-export function getMoviesList(page , sorted, setMovies, setError, setIsLoaded) {
-  const URL = `http://api.themoviedb.org/3/discover/movie?page=${page}&sort_by=${sorted}&api_key=${API_KEY}`
+export function getMoviesList(page , sorted, setMovies, setError, setIsLoaded, ...filters) {
+  console.log(filters)
+  let movieFilters = filters.filter(filt => filt)
+
+  if (movieFilters.length) {
+    movieFilters = `&${movieFilters.join('&')}&`
+  } else {
+    movieFilters = ''
+  }
+
+  const URL = `http://api.themoviedb.org/3/discover/movie?page=${page}&${movieFilters}&sort_by=${sorted}&api_key=${API_KEY}`
 
   fetch(URL)
     .then(data =>
@@ -134,6 +143,25 @@ export function getActorInfo(id, setActor) {
     .then(json => {
       console.log(json)
       setActor(json)
+    })
+    .catch(err => {
+      console.log(err)
+    })
+}
+
+export function getTest(filters='') {
+  const URL = `http://api.themoviedb.org/3/discover/movie?page=1&with_genres=10752&api_key=${API_KEY}`
+
+
+  fetch(URL)
+    .then(data =>{
+            // console.log(data)
+        return data.ok
+          ? data.json()
+          : Promise.reject(data.statusText)
+    })
+    .then(json => {
+      console.log(json)
     })
     .catch(err => {
       console.log(err)

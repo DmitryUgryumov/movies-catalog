@@ -1,20 +1,39 @@
 import React, { useEffect, useState } from 'react'
-import { getMoviesList } from '../../api/api'
+import { getMoviesList, getTest } from '../../api/api'
+
 import MoviesList from "../Movies/MoviesList";
 import PageLoader from "../UI/Loaders/PageLoader";
-import FilterRadio from "../Filters/FilterRadio";
+import Sorted from "../Filters/Sorted";
+import FilterGenres from "../Filters/FilterGenres";
 
-
-
+const genresArr = [
+  {id: 28, description: 'Action'},
+  {id: 12, description: 'Adventure'},
+  {id: 16, description: 'Animation'},
+  {id: 35, description: 'Comedy'},
+  {id: 80, description: 'Crime'},
+  {id: 99, description: 'Documentary'},
+  {id: 18, description: 'Drama'},
+  {id: 10751, description: 'Family'},
+  {id: 14, description: 'Fantasy'},
+  {id: 36, description: 'History'},
+  {id: 27, description: 'Horror'},
+  {id: 10402, description: 'Music'},
+  {id: 9648, description: 'Mystery'},
+  {id: 10749, description: 'Romance'},
+  {id: 878, description: 'Science Fiction'},
+  {id: 10770, description: 'TV Movie'},
+  {id: 53, description: 'Thriller'},
+  {id: 10752, description: 'War'}
+]
 
 const MoviesCatalog = () => {
   const [movies, setMovies] = useState([])
   const [error, setError] = useState(false)
   const [isLoaded, setIsLoaded] = useState(false)
   const [page, setPage] = useState(sessionStorage.getItem('page') ? +sessionStorage.getItem('page') : 1)
-
-  // const [filters, setFilters] = useState([])
-
+  const [genresItems, setGenresItems] = useState(genresArr.map(genre => ({ ...genre, requestValue: genre.id, checked: false })))
+  const [genres, setGenres] = useState(sessionStorage.getItem('genres') ? sessionStorage.getItem('genres') : '')
   const [sortedItems, setSortedItems] = useState([
     {id: 1, description: 'popularity', requestValue: 'popularity.desc', checked: true}, //default sorting
     {id: 2, description: 'vote average', requestValue: 'vote_average.desc&vote_count.gte=1000', checked: false},
@@ -23,43 +42,25 @@ const MoviesCatalog = () => {
   ])
   const [sorted, setSorted] = useState(sessionStorage.getItem('sorted') ? sessionStorage.getItem('sorted') : 'popularity.desc')
 
-
   useEffect(() => {
-    getMoviesList(page, sorted, setMovies, setError, setIsLoaded)
+    getMoviesList(page, sorted, setMovies, setError, setIsLoaded, genres)
     setSortedItems(prev => prev.map(item => item.requestValue === sorted ? {...item, checked:true} : {...item, checked:false}))
-    console.log('request')
+    setGenresItems(prev => prev.map(item => genres.includes(item.requestValue) ? {...item, checked:true} : {...item, checked:false} ))
   }, [])
 
-
   useEffect(() => sessionStorage.setItem('page', page.toString()), [page])
-  // useEffect(() => sessionStorage.setItem('scroll', scroll.toString()), [scroll])
-
-
-  function changeSort(id) {
-    const newSorted = sortedItems.filter(item => item.id.toString() === id)[0].requestValue
-
-    sessionStorage.setItem('sorted', newSorted)
-
-    setSorted(newSorted)
-    setIsLoaded(false)
-    setPage(1)
-
-    getMoviesList(1, newSorted, setMovies, setError, setIsLoaded)
-  }
-
 
   const pageNext = () => {
     setPage(prev => prev + 1)
-    getMoviesList(page + 1, sorted, setMovies, setError, setIsLoaded)
+    getMoviesList(page + 1, sorted, setMovies, setError, setIsLoaded, genres)
     document.documentElement.scrollTop = 0
   }
 
   const pagePrev = () => {
     setPage(prev => prev - 1)
-    getMoviesList(page - 1, sorted, setMovies, setError, setIsLoaded)
+    getMoviesList(page - 1, sorted, setMovies, setError, setIsLoaded, genres)
     document.documentElement.scrollTop = 0
   }
-
 
   if (error) {
     return <div className='error'>Error : {error}</div>
@@ -69,10 +70,19 @@ const MoviesCatalog = () => {
 
   return(
     <>
-      <div className="filters">
-        <h2 className="filters__title">Filters</h2>
-        <FilterRadio state={sortedItems} setState={setSortedItems} name='sorted' change={changeSort}/>
+      <div className='filters'>
+        <div className='sorted'>
+          <p className='sorted__title'>Soring by: </p>
+          <Sorted sortedItems={sortedItems} setSortedItems={setSortedItems} setSorted={setSorted}
+                  setIsLoaded={setIsLoaded} setPage={setPage} setMovies={setMovies} setError={setError} genres={genres}/>
+        </div>
+        <div className='genres'>
+          <p className='genres__title'>Genres : </p>
+          <FilterGenres genresItems={genresItems} setGenresItems={setGenresItems} setGenres={setGenres}
+                        setIsLoaded={setIsLoaded} setPage={setPage} setMovies={setMovies} setError={setError} sorted={sorted}/>
+        </div>
       </div>
+
       <div className='movies'>
         <MoviesList movies={movies.results}/>
         <div className='movies__buttons page-buttons'>
