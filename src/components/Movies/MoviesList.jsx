@@ -1,6 +1,5 @@
 import React, {useEffect} from 'react';
 import MovieCard from "./MovieCard";
-import {getMovie} from "../../api/api";
 
 const MoviesList = ({ movies }) => {
   return (

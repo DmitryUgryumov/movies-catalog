@@ -23,10 +23,10 @@ const FilterDate = ({ dateList, setDateList, setDateActive, setIsLoaded, setPage
 
 
   return (
-    <select name="date" onChange={changeDateFilter} value={selectedValue.requestValue}>
+    <select className='release-date__select' name="date" onChange={changeDateFilter} value={selectedValue.requestValue}>
       {
         dateList.map(date =>
-          <option value={date.requestValue} key={date.id}>
+          <option className='release-date__option' value={date.requestValue} key={date.id}>
             {date.description}
           </option>
         )

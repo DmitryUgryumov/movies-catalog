@@ -38,12 +38,13 @@ html {
 
 .filters {
   margin-top: 30px;
+  padding: 0 10px;
 }
 
 .sorted, .genres, .release-date {
   display: flex;
   flex-wrap: wrap;
-  max-width: 900px;
+  max-width: 1000px;
   margin: 0 auto;
 }
 .sorted p, .genres p, .release-date p {
@@ -51,15 +52,15 @@ html {
 }
 
 .sorted__ul, .genres__ul {
-  margin-left: 50px;
+  margin-left: 10px;
   display: flex;
   justify-content: left;
-  flex-basis: 75%;
+  flex-basis: 80%;
   flex-wrap: wrap;
   gap: 10px 0;
 }
 .sorted__ul li, .genres__ul li {
-  flex-basis: 25%;
+  flex-basis: 160px;
 }
 .sorted__ul li input, .genres__ul li input {
   cursor: pointer;
@@ -71,6 +72,15 @@ html {
 
 .genres, .release-date {
   margin-top: 30px;
+}
+
+.release-date__title {
+  align-self: center;
+}
+
+.release-date__select {
+  margin-left: 10px;
+  padding: 5px 10px;
 }
 
 .movies {
@@ -564,6 +574,10 @@ html {
   .info__ul {
     padding: 0;
   }
+
+  .sorted__ul li, .genres__ul li {
+    flex-basis: 33%;
+  }
 }
 @media (max-width: 580px) {
   .movie-card__title {
@@ -592,6 +606,13 @@ html {
 
   .info__span + .info__span:before {
     margin: 0 5px;
+  }
+
+  .sorted__ul li, .genres__ul li {
+    flex-basis: 50%;
+  }
+  .sorted__ul li label, .genres__ul li label {
+    padding-left: 3px;
   }
 }
 

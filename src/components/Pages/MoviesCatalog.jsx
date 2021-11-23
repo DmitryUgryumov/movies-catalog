@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {dateArr, genresArr, getMoviesList, getTest, sortedArr} from '../../api/api'
+import {dateArr, genresArr, getMoviesList, sortedArr} from '../../api/api'
 
 import MoviesList from "../Movies/MoviesList";
 import PageLoader from "../UI/Loaders/PageLoader";
@@ -57,7 +57,7 @@ const MoviesCatalog = () => {
                   setIsLoaded={setIsLoaded} setPage={setPage} setMovies={setMovies} setError={setError} genresActive={genresActive} dateActive={dateActive}/>
         </div>
         <div className='genres'>
-          <p className='genres__title'>Genres : </p>
+          <p className='genres__title'>Genres: </p>
           <FilterGenres genresList={genresList} setGenresList={setGenresList} setGenresActive={setGenresActive}
                         setIsLoaded={setIsLoaded} setPage={setPage} setMovies={setMovies} setError={setError} sortedActive={sortedActive} dateActive={dateActive}/>
         </div>
@@ -71,17 +71,17 @@ const MoviesCatalog = () => {
       <div className='movies'>
         <MoviesList movies={movies.results}/>
         <div className='movies__buttons page-buttons'>
-          {
-            page > 1
-              ? <button className='page-buttons__prev' onClick={pagePrev}>← {page - 1} page</button>
-              : null
-          }
+          {/*{*/}
+          {/*  page > 1*/}
+          {/*    ? <button className='page-buttons__prev' onClick={pagePrev}>← {page - 1} page</button>*/}
+          {/*    : null*/}
+          {/*}*/}
 
-          {
-            page < movies.total_pages
-              ? <button className='page-buttons__next' onClick={pageNext}>{page + 1} page →</button>
-              : null
-          }
+          {/*{*/}
+          {/*  page < movies.total_pages*/}
+          {/*    ? <button className='page-buttons__next' onClick={pageNext}>{page + 1} page →</button>*/}
+          {/*    : null*/}
+          {/*}*/}
         </div>
       </div>
     </>

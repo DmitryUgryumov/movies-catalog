@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {getActors, getMovie} from "../../api/api";
+import {apiMethod} from "../../api/api";
 
 import noPoster from '../../img/Question_mark.svg'
 import {Link} from "react-router-dom";
@@ -13,7 +13,8 @@ const MovieActors = ({ movieId }) => {
   const buttonTriangle = useRef(null)
 
   useEffect(() => {
-    getActors(movieId, setActors, setError, setIsLoaded)
+    // getActors(movieId, setActors, setError, setIsLoaded)
+    apiMethod('movie', movieId, setActors, '/credits', setError, setIsLoaded)
   }, [movieId])
 
   function changeListHeight() {

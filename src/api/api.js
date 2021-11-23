@@ -1,6 +1,5 @@
 const API_KEY = '41ded1b2e567bbba63fba906ccc11068'
 
-
 export const genresArr = [
   {id: 28, description: 'Action', requestValue: 28, checked: false},
   {id: 12, description: 'Adventure', requestValue: 12, checked: false},
@@ -21,6 +20,7 @@ export const genresArr = [
   {id: 53, description: 'Thriller', requestValue: 53, checked: false},
   {id: 10752, description: 'War', requestValue: 10752, checked: false}
 ]
+
 export const dateArr = [
   {id: 1, description: 'all years', requestValue: '', checked: true},
   {id: 2, description: '2020-', requestValue: 'primary_release_date.gte=2020-01-01', checked: false},
@@ -28,11 +28,12 @@ export const dateArr = [
     return { id: ind + 3, description: `${2010 - 10*ind} - ${2020 - 10*ind}`, requestValue: `primary_release_date.gte=${2010 - 10*ind}-01-01&primary_release_date.lte=${2020 - 1 - 10*ind}-12-30`, checked: false }
   })
 ]
+
 export const sortedArr = [
-  {id: 1, description: 'popularity', requestValue: 'popularity.desc&vote_count.gte=50', checked: true}, //default sorting
-  {id: 2, description: 'vote average', requestValue: 'vote_average.desc&vote_count.gte=1000', checked: false},
-  {id: 3, description: 'vote count', requestValue: 'vote_count.desc&vote_count.gte=50', checked: false},
-  {id: 4, description: 'release date', requestValue: `primary_release_date.desc&vote_count.gte=50`, checked: false}
+  {id: 1, description: 'Popularity', requestValue: 'popularity.desc&vote_count.gte=50', checked: true}, //default sorting
+  {id: 2, description: 'Vote average', requestValue: 'vote_average.desc&vote_count.gte=1000', checked: false},
+  {id: 3, description: 'Vote count', requestValue: 'vote_count.desc&vote_count.gte=50', checked: false},
+  {id: 4, description: 'Release date', requestValue: `primary_release_date.desc&vote_count.gte=50`, checked: false}
 ]
 
 
@@ -69,8 +70,8 @@ export function getMoviesList(page , sorted, setMovies, setError, setIsLoaded, .
     })
 }
 
-export function getMovie(id, setMovie, setError, setIsLoaded) {
-  const URL = `https://api.themoviedb.org/3/movie/${id}?&api_key=${API_KEY}`
+export function apiMethod(option, id, setState, credits='', setError='', setIsLoaded='') {
+  const URL = `https://api.themoviedb.org/3/${option}/${id}${credits}?&api_key=${API_KEY}`
 
   fetch(URL)
     .then(data =>
@@ -80,123 +81,16 @@ export function getMovie(id, setMovie, setError, setIsLoaded) {
     )
     .then(json => {
       console.log(json)
-      setMovie(json)
-      setIsLoaded(true)
-      setError(false)
-    })
-    .catch(err => {
-      setIsLoaded(true)
-      setError(true)
-    })
-}
-
-//https://api.themoviedb.org/3/movie/150540?api_key=###&append_to_response=credits
-
-export function getActors(id, setMovie, setError, setIsLoaded) {
-  const URL = `https://api.themoviedb.org/3/movie/${id}/credits?api_key=${API_KEY}` //список актеров
-
-  fetch(URL)
-    .then(data =>{
-        // console.log(data)
-        return data.ok
-          ? data.json()
-          : Promise.reject(data.statusText)
-    }
-    )
-    .then(json => {
-      console.log(json)
-      setMovie(json)
-      setIsLoaded(true)
-      setError(false)
-    })
-    .catch(err => {
-      // console.log(err)
-      setIsLoaded(true)
-      setError(true)
-    })
-}
-
-export function getCollections(id, setMovie) {
-  const URL = `https://api.themoviedb.org/3/collection/${id}?api_key=${API_KEY}` //список пфильмов из коллекции
-
-  fetch(URL)
-    .then(data =>{
-        // console.log(data)
-        return data.ok
-          ? data.json()
-          : Promise.reject(data.statusText)
+      setState(json)
+      if (setIsLoaded && setError) {
+        setIsLoaded(true)
+        setError(false)
       }
-    )
-    .then(json => {
-      // console.log(json)
-      setMovie(json)
     })
     .catch(err => {
-      // console.log(err)
-    })
-}
-
-export function getActorFilms(id, setActor, setError, setIsLoaded) {
-  // const URL = `https://api.themoviedb.org/3/person/${id}?api_key=${API_KEY}` //инф об актере
-  const URL = `https://api.themoviedb.org/3/person/${id}/movie_credits?api_key=${API_KEY}` //инф об актере
-
-
-  fetch(URL)
-    .then(data =>{
-        // console.log(data)
-        return data.ok
-          ? data.json()
-          : Promise.reject(data.statusText)
+      if (setIsLoaded && setError) {
+        setIsLoaded(true)
+        setError(err)
       }
-    )
-    .then(json => {
-      // console.log(json)
-      setActor(json)
-      setIsLoaded(true)
-      setError(false)
-    })
-    .catch(err => {
-      // console.log(err)
-      setIsLoaded(true)
-      setError(true)
-    })
-}
-
-export function getActorInfo(id, setActor) {
-  const URL = `https://api.themoviedb.org/3/person/${id}?api_key=${API_KEY}` //инф об актере
-
-  fetch(URL)
-    .then(data =>{
-        // console.log(data)
-        return data.ok
-          ? data.json()
-          : Promise.reject(data.statusText)
-      }
-    )
-    .then(json => {
-      console.log(json)
-      setActor(json)
-    })
-    .catch(err => {
-      console.log(err)
-    })
-}
-
-export function getTest() {
-  const URL = `http://api.themoviedb.org/3/discover/movie?primary_release_date.gte=1960-01-01&primary_release_date.lte=1970-12-31&api_key=${API_KEY}`
-  // const URL = `http://api.themoviedb.org/3/discover/movie?primary_release_year=2010&page=1&api_key=${API_KEY}`
-  //http://api.themoviedb.org/3/discover/movie?page=1&with_genres=80,14&primary_release_date.gte1960-01-01&primary_release_date.lte=1970-12-30&sort_by=vote_count.desc&api_key=41ded1b2e567bbba63fba906ccc11068
-  fetch('http://api.themoviedb.org/3/discover/movie?page=1&primary_release_date.gte=2014-09-15&primary_release_date.lte=2014-10-22&api_key=41ded1b2e567bbba63fba906ccc11068')
-    .then(data =>{
-      // console.log(data)
-        return data.ok
-          ? data.json()
-          : Promise.reject(data.statusText)
-    })
-    .then(json => {
-      // console.log(json)
-    })
-    .catch(err => {
-      console.log(err)
     })
 }

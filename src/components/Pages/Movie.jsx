@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import {Link, useParams} from 'react-router-dom'
-import {getActors, getCollections, getMovie} from "../../api/api";
+import {apiMethod} from "../../api/api";
 import MovieInfo from "../MovieInfo/MovieInfo";
 import MovieActors from "../MovieInfo/MovieActors";
 import MoviesList from "../Movies/MoviesList";
@@ -18,12 +18,14 @@ const Movie = () => {
 
   useEffect(() => {
     document.documentElement.scrollTop = 0
-    getMovie(movieId, setMovie, setError, setIsLoaded)
+    // getMovie(movieId, setMovie, setError, setIsLoaded)
+    apiMethod('movie', movieId, setMovie, '', setError, setIsLoaded)
   }, [movieId])
 
   useEffect(() => {
     if (Object.keys(movie).length && movie.belongs_to_collection) {
-      getCollections(movie.belongs_to_collection.id, setMovieCollections)
+      // getCollections(movie.belongs_to_collection.id, setMovieCollections)
+      apiMethod('collection', movie.belongs_to_collection.id, setMovieCollections)
     }
   }, [movie])
 

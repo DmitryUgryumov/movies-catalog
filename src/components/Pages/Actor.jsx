@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {getActorFilms, getActorInfo} from "../../api/api";
+import {apiMethod} from "../../api/api";
 import {Link, useParams} from "react-router-dom";
 import MoviesList from "../Movies/MoviesList";
 import PageLoader from "../UI/Loaders/PageLoader";
@@ -13,8 +13,10 @@ const Actor = () => {
   const { actorId } = useParams()
 
   useEffect(() => {
-    getActorInfo(actorId, setActorInfo)
-    getActorFilms(actorId, setActorMovies, setError, setIsLoaded)
+    // getActorInfo(actorId, setActorInfo)
+    // getActorFilms(actorId, setActorMovies, setError, setIsLoaded)
+    apiMethod('movie', actorId, setActorInfo, 'credits')
+    apiMethod('person', actorId, setActorMovies,'/movie_credits', setError, setIsLoaded)
   }, [])
 
   if (error) {
