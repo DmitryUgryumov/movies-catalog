@@ -40,21 +40,21 @@ html {
   margin-top: 30px;
 }
 
-.sorted, .genres {
+.sorted, .genres, .release-date {
   display: flex;
   flex-wrap: wrap;
   max-width: 900px;
   margin: 0 auto;
 }
-.sorted p, .genres p {
-  flex-basis: 10%;
+.sorted p, .genres p, .release-date p {
+  flex-basis: 15%;
 }
 
 .sorted__ul, .genres__ul {
   margin-left: 50px;
   display: flex;
   justify-content: left;
-  flex-basis: 80%;
+  flex-basis: 75%;
   flex-wrap: wrap;
   gap: 10px 0;
 }
@@ -69,7 +69,7 @@ html {
   cursor: pointer;
 }
 
-.genres {
+.genres, .release-date {
   margin-top: 30px;
 }
 

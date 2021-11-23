@@ -1,64 +1,44 @@
 import React, { useEffect, useState } from 'react'
-import { getMoviesList, getTest } from '../../api/api'
+import {dateArr, genresArr, getMoviesList, getTest, sortedArr} from '../../api/api'
 
 import MoviesList from "../Movies/MoviesList";
 import PageLoader from "../UI/Loaders/PageLoader";
 import Sorted from "../Filters/Sorted";
 import FilterGenres from "../Filters/FilterGenres";
+import FilterDate from "../Filters/FilterDate";
 
-const genresArr = [
-  {id: 28, description: 'Action'},
-  {id: 12, description: 'Adventure'},
-  {id: 16, description: 'Animation'},
-  {id: 35, description: 'Comedy'},
-  {id: 80, description: 'Crime'},
-  {id: 99, description: 'Documentary'},
-  {id: 18, description: 'Drama'},
-  {id: 10751, description: 'Family'},
-  {id: 14, description: 'Fantasy'},
-  {id: 36, description: 'History'},
-  {id: 27, description: 'Horror'},
-  {id: 10402, description: 'Music'},
-  {id: 9648, description: 'Mystery'},
-  {id: 10749, description: 'Romance'},
-  {id: 878, description: 'Science Fiction'},
-  {id: 10770, description: 'TV Movie'},
-  {id: 53, description: 'Thriller'},
-  {id: 10752, description: 'War'}
-]
 
 const MoviesCatalog = () => {
   const [movies, setMovies] = useState([])
   const [error, setError] = useState(false)
   const [isLoaded, setIsLoaded] = useState(false)
   const [page, setPage] = useState(sessionStorage.getItem('page') ? +sessionStorage.getItem('page') : 1)
-  const [genresItems, setGenresItems] = useState(genresArr.map(genre => ({ ...genre, requestValue: genre.id, checked: false })))
-  const [genres, setGenres] = useState(sessionStorage.getItem('genres') ? sessionStorage.getItem('genres') : '')
-  const [sortedItems, setSortedItems] = useState([
-    {id: 1, description: 'popularity', requestValue: 'popularity.desc', checked: true}, //default sorting
-    {id: 2, description: 'vote average', requestValue: 'vote_average.desc&vote_count.gte=1000', checked: false},
-    {id: 3, description: 'vote count', requestValue: 'vote_count.desc', checked: false},
-    {id: 4, description: 'release date', requestValue: `primary_release_date.desc&primary_release_date.lte=2021-11-18&vote_count.gte=50`, checked: false}
-  ])
-  const [sorted, setSorted] = useState(sessionStorage.getItem('sorted') ? sessionStorage.getItem('sorted') : 'popularity.desc')
+  const [genresList, setGenresList] = useState(genresArr)
+  const [genresActive, setGenresActive] = useState(sessionStorage.getItem('genres') ? sessionStorage.getItem('genres') : '')
+  const [dateList, setDateList] = useState(dateArr)
+  const [dateActive, setDateActive] = useState(sessionStorage.getItem('date') ? sessionStorage.getItem('date') : '')
+  const [sortedList, setSortedList] = useState(sortedArr)
+  const [sortedActive, setSortedActive] = useState(sessionStorage.getItem('sorted') ? sessionStorage.getItem('sorted') : 'popularity.desc&vote_count.gte=50')
 
   useEffect(() => {
-    getMoviesList(page, sorted, setMovies, setError, setIsLoaded, genres)
-    setSortedItems(prev => prev.map(item => item.requestValue === sorted ? {...item, checked:true} : {...item, checked:false}))
-    setGenresItems(prev => prev.map(item => genres.includes(item.requestValue) ? {...item, checked:true} : {...item, checked:false} ))
+    getMoviesList(page, sortedActive, setMovies, setError, setIsLoaded, genresActive, dateActive)
+
+    setSortedList(prev => prev.map(item => item.requestValue === sortedActive ? {...item, checked:true} : {...item, checked:false}))
+    setGenresList(prev => prev.map(item => genresActive.includes(item.requestValue) ? {...item, checked:true} : {...item, checked:false} ))
+    setDateList( prev => prev.map(item => item.requestValue === dateActive ? { ...item, checked:true } : {...item, checked: false}) )
   }, [])
 
   useEffect(() => sessionStorage.setItem('page', page.toString()), [page])
 
   const pageNext = () => {
     setPage(prev => prev + 1)
-    getMoviesList(page + 1, sorted, setMovies, setError, setIsLoaded, genres)
+    getMoviesList(page + 1, sortedActive, setMovies, setError, setIsLoaded, genresActive, dateActive)
     document.documentElement.scrollTop = 0
   }
 
   const pagePrev = () => {
     setPage(prev => prev - 1)
-    getMoviesList(page - 1, sorted, setMovies, setError, setIsLoaded, genres)
+    getMoviesList(page - 1, sortedActive, setMovies, setError, setIsLoaded, genresActive, dateActive)
     document.documentElement.scrollTop = 0
   }
 
@@ -73,13 +53,18 @@ const MoviesCatalog = () => {
       <div className='filters'>
         <div className='sorted'>
           <p className='sorted__title'>Soring by: </p>
-          <Sorted sortedItems={sortedItems} setSortedItems={setSortedItems} setSorted={setSorted}
-                  setIsLoaded={setIsLoaded} setPage={setPage} setMovies={setMovies} setError={setError} genres={genres}/>
+          <Sorted sortedList={sortedList} setSortedList={setSortedList} setSortedActive={setSortedActive}
+                  setIsLoaded={setIsLoaded} setPage={setPage} setMovies={setMovies} setError={setError} genresActive={genresActive} dateActive={dateActive}/>
         </div>
         <div className='genres'>
           <p className='genres__title'>Genres : </p>
-          <FilterGenres genresItems={genresItems} setGenresItems={setGenresItems} setGenres={setGenres}
-                        setIsLoaded={setIsLoaded} setPage={setPage} setMovies={setMovies} setError={setError} sorted={sorted}/>
+          <FilterGenres genresList={genresList} setGenresList={setGenresList} setGenresActive={setGenresActive}
+                        setIsLoaded={setIsLoaded} setPage={setPage} setMovies={setMovies} setError={setError} sortedActive={sortedActive} dateActive={dateActive}/>
+        </div>
+        <div className='release-date'>
+          <p className='release-date__title'>Release date: </p>
+          <FilterDate dateList={dateList} setDateList={setDateList} setDateActive={setDateActive}
+                      setIsLoaded={setIsLoaded} setPage={setPage} setMovies={setMovies} setError={setError} genresActive={genresActive} sortedActive={sortedActive}/>
         </div>
       </div>
 

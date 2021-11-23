@@ -50,14 +50,14 @@ html {
   margin-top: 30px;
 }
 
-.sorted, .genres {
+.sorted, .genres, .release-date {
   display: flex;
   flex-wrap: wrap;
   max-width: 900px;
   margin: 0 auto;
 
   p {
-    flex-basis: 10%;
+    flex-basis: 15%;
   }
 }
 
@@ -66,7 +66,7 @@ html {
   margin-left: 50px;
   display: flex;
   justify-content: left;
-  flex-basis: 80%;
+  flex-basis: 75%;
   flex-wrap: wrap;
   gap: 10px 0;
 
@@ -84,7 +84,7 @@ html {
   }
 }
 
-.genres{
+.genres, .release-date{
   margin-top: 30px;
 }
 
