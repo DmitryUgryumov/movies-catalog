@@ -1,34 +1,45 @@
 import React, { useEffect, useState } from 'react'
-import {dateArr, genresArr, getMoviesList, sortedArr} from '../../api/api'
+import { dateArr, genresArr, sortedArr, getMoviesList } from '../../api/api'
 
-import MoviesList from "../Movies/MoviesList";
-import PageLoader from "../UI/Loaders/PageLoader";
-import Sorted from "../Filters/Sorted";
-import FilterGenres from "../Filters/FilterGenres";
-import FilterDate from "../Filters/FilterDate";
+import MoviesList from '../Movies/MoviesList'
+import PageLoader from '../UI/Loaders/PageLoader'
+import Sorted from '../Filters/Sorted'
+import FilterGenres from '../Filters/FilterGenres'
+import FilterDate from '../Filters/FilterDate'
+import NextPage from '../UI/Buttons/NextPage'
+import PrevPage from '../UI/Buttons/PrevPage'
+
+
+const checkProperty = (key, nonKeyValue='') => sessionStorage.getItem(key)
+  ? JSON.parse(sessionStorage.getItem(key))
+  : nonKeyValue
+
+const initialStateFilter = (array, typeFilter, filterActive) => typeFilter === 'radio'
+  ? array.map(item => item.requestValue === filterActive ? { ...item, checked:true } : { ...item, checked:false })
+  : array.map(item => filterActive.includes(item.requestValue) ? { ...item, checked:true } : { ...item, checked:false })
 
 
 const MoviesCatalog = () => {
   const [movies, setMovies] = useState([])
   const [error, setError] = useState(false)
   const [isLoaded, setIsLoaded] = useState(false)
-  const [page, setPage] = useState(sessionStorage.getItem('page') ? +sessionStorage.getItem('page') : 1)
-  const [genresList, setGenresList] = useState(genresArr)
-  const [genresActive, setGenresActive] = useState(sessionStorage.getItem('genres') ? sessionStorage.getItem('genres') : '')
-  const [dateList, setDateList] = useState(dateArr)
-  const [dateActive, setDateActive] = useState(sessionStorage.getItem('date') ? sessionStorage.getItem('date') : '')
-  const [sortedList, setSortedList] = useState(sortedArr)
-  const [sortedActive, setSortedActive] = useState(sessionStorage.getItem('sorted') ? sessionStorage.getItem('sorted') : 'popularity.desc&vote_count.gte=50')
 
-  useEffect(() => {
-    getMoviesList(page, sortedActive, setMovies, setError, setIsLoaded, genresActive, dateActive)
+  const [page, setPage] = useState( checkProperty('page', 1) )
+  const [genresActive, setGenresActive] = useState( checkProperty('genres') )
+  const [dateActive, setDateActive] = useState( checkProperty('date') )
+  const [sortedActive, setSortedActive] = useState (checkProperty('sorted', 'popularity.desc&vote_count.gte=50') )
 
-    setSortedList(prev => prev.map(item => item.requestValue === sortedActive ? {...item, checked:true} : {...item, checked:false}))
-    setGenresList(prev => prev.map(item => genresActive.includes(item.requestValue) ? {...item, checked:true} : {...item, checked:false} ))
-    setDateList( prev => prev.map(item => item.requestValue === dateActive ? { ...item, checked:true } : {...item, checked: false}) )
-  }, [])
+  const [genresList, setGenresList] = useState( initialStateFilter(genresArr, 'checkbox', genresActive) )
+  const [dateList, setDateList] = useState( initialStateFilter(dateArr, 'radio', dateActive) )
+  const [sortedList, setSortedList] = useState( initialStateFilter(sortedArr, 'radio', sortedActive) )
 
-  useEffect(() => sessionStorage.setItem('page', page.toString()), [page])
+
+  useEffect(() => getMoviesList(page, sortedActive, setMovies, setError, setIsLoaded, genresActive, dateActive), [])
+
+  useEffect(() => sessionStorage.setItem('page', JSON.stringify(page)), [page])
+
+  useEffect(() => document.documentElement.scrollTop = checkProperty('scroll', 0))
+
 
   const pageNext = () => {
     setPage(prev => prev + 1)
@@ -42,6 +53,13 @@ const MoviesCatalog = () => {
     document.documentElement.scrollTop = 0
   }
 
+  const scrolling = e => {
+    if ( e.target.tagName !== 'LI' && e.target.className !== 'movie-card__date' ) {
+      sessionStorage.setItem('scroll', document.documentElement.scrollTop.toString())
+    }
+  }
+
+
   if (error) {
     return <div className='error'>Error : {error}</div>
   } else if (!isLoaded) {
@@ -51,37 +69,24 @@ const MoviesCatalog = () => {
   return(
     <>
       <div className='filters'>
-        <div className='sorted'>
-          <p className='sorted__title'>Soring by: </p>
-          <Sorted sortedList={sortedList} setSortedList={setSortedList} setSortedActive={setSortedActive}
-                  setIsLoaded={setIsLoaded} setPage={setPage} setMovies={setMovies} setError={setError} genresActive={genresActive} dateActive={dateActive}/>
-        </div>
-        <div className='genres'>
-          <p className='genres__title'>Genres: </p>
-          <FilterGenres genresList={genresList} setGenresList={setGenresList} setGenresActive={setGenresActive}
-                        setIsLoaded={setIsLoaded} setPage={setPage} setMovies={setMovies} setError={setError} sortedActive={sortedActive} dateActive={dateActive}/>
-        </div>
-        <div className='release-date'>
-          <p className='release-date__title'>Release date: </p>
-          <FilterDate dateList={dateList} setDateList={setDateList} setDateActive={setDateActive}
-                      setIsLoaded={setIsLoaded} setPage={setPage} setMovies={setMovies} setError={setError} genresActive={genresActive} sortedActive={sortedActive}/>
-        </div>
+        <Sorted sortedList={sortedList} setSortedList={setSortedList} setSortedActive={setSortedActive}
+                setIsLoaded={setIsLoaded} setPage={setPage} setMovies={setMovies} setError={setError}
+                genresActive={genresActive} dateActive={dateActive}/>
+
+        <FilterGenres genresList={genresList} setGenresList={setGenresList} setGenresActive={setGenresActive}
+                      setIsLoaded={setIsLoaded} setPage={setPage} setMovies={setMovies} setError={setError}
+                      sortedActive={sortedActive} dateActive={dateActive}/>
+
+        <FilterDate dateList={dateList} setDateList={setDateList} setDateActive={setDateActive}
+                    setIsLoaded={setIsLoaded} setPage={setPage} setMovies={setMovies} setError={setError}
+                    genresActive={genresActive} sortedActive={sortedActive}/>
       </div>
 
-      <div className='movies'>
+      <div className='movies' onClick={scrolling}>
         <MoviesList movies={movies.results}/>
         <div className='movies__buttons page-buttons'>
-          {/*{*/}
-          {/*  page > 1*/}
-          {/*    ? <button className='page-buttons__prev' onClick={pagePrev}>← {page - 1} page</button>*/}
-          {/*    : null*/}
-          {/*}*/}
-
-          {/*{*/}
-          {/*  page < movies.total_pages*/}
-          {/*    ? <button className='page-buttons__next' onClick={pageNext}>{page + 1} page →</button>*/}
-          {/*    : null*/}
-          {/*}*/}
+          <PrevPage handler={pagePrev} page={page}/>
+          <NextPage handler={pageNext} page={page} totalPages={movies.total_pages}/>
         </div>
       </div>
     </>

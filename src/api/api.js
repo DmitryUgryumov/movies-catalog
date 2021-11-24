@@ -47,7 +47,6 @@ export function getMoviesList(page , sorted, setMovies, setError, setIsLoaded, .
   }
 
   const URL = `http://api.themoviedb.org/3/discover/movie?page=${page}${movieFilters || '&'}sort_by=${sorted}&api_key=${API_KEY}`
-  console.log(URL)
   fetch(URL)
     .then(data =>
       data.ok
@@ -55,18 +54,13 @@ export function getMoviesList(page , sorted, setMovies, setError, setIsLoaded, .
         : Promise.reject(data.statusText)
     )
     .then(json => {
-      // setTimeout(() => {
-      //   setMovies(json)
-      //   setIsLoaded(true)
-      //   setError(false)
-      // }, 1500)
       setMovies(json)
       setIsLoaded(true)
       setError(false)
     })
     .catch(err => {
       setIsLoaded(true)
-      setError(true)
+      setError(err)
     })
 }
 
@@ -80,7 +74,6 @@ export function apiMethod(option, id, setState, credits='', setError='', setIsLo
         : Promise.reject(data.statusText)
     )
     .then(json => {
-      console.log(json)
       setState(json)
       if (setIsLoaded && setError) {
         setIsLoaded(true)

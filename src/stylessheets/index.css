@@ -158,13 +158,25 @@ html {
 }
 
 .movies__buttons, .page-buttons {
-  margin: 30px -50px;
+  margin: 50px 0;
+  padding-bottom: 50px;
   position: relative;
 }
 .movies__buttons button, .page-buttons button {
   position: absolute;
   font-size: 25px;
-  padding: 10px;
+  padding: 15px 10px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  background: #C0C0C0;
+  transition: 0.4s;
+}
+.movies__buttons button:hover, .page-buttons button:hover {
+  background: #808080;
+}
+.movies__buttons button:active, .page-buttons button:active {
+  background: #C0C0C0;
 }
 
 .page-buttons__prev {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 import noPoster from '../../img/Question_mark.svg'
 

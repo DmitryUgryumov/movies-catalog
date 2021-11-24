@@ -1,5 +1,5 @@
-import React from 'react';
-import {getMoviesList} from "../../api/api";
+import React from 'react'
+import { getMoviesList } from '../../api/api'
 
 const FilterGenres = ({ genresList, setGenresList, setGenresActive, setIsLoaded, setPage, setMovies, setError, sortedActive, dateActive }) => {
 
@@ -8,9 +8,10 @@ const FilterGenres = ({ genresList, setGenresList, setGenresActive, setIsLoaded,
       .filter(genre => genre.checked)
       .map(genre => genre.requestValue.toString())
 
-    newGenres = newGenres.length ? `with_genres=${newGenres.join(',')}` : null
+    newGenres = newGenres.length ? `with_genres=${newGenres.join(',')}` : ''
 
-    sessionStorage.setItem('genres', newGenres)
+    sessionStorage.setItem('genres', JSON.stringify(newGenres))
+    sessionStorage.setItem('scroll', JSON.stringify(0))
 
     setGenresActive(newGenres)
     setIsLoaded(false)
@@ -32,18 +33,22 @@ const FilterGenres = ({ genresList, setGenresList, setGenresActive, setIsLoaded,
   }
 
   return (
-    <ul className='genres__ul'>
-      {
-        genresList.map(item => (
-            <li key={item.id} className='genres__li'>
-              <input id={item.id} type="checkbox" name='genres' value={item.requestValue} checked={item.checked} onChange={inputHandler}/>
-              <label htmlFor={item.id}>{item.description}</label>
-            </li>
+    <div className='genres'>
+      <p className='genres__title'>Genres: </p>
+      <ul className='genres__ul'>
+        {
+          genresList.map(item => (
+              <li key={item.id} className='genres__li'>
+                <input id={item.id} type="checkbox" name='genres' value={item.requestValue} checked={item.checked} onChange={inputHandler}/>
+                <label htmlFor={item.id}>{item.description}</label>
+              </li>
+            )
           )
-        )
-      }
-    </ul>
-  );
-};
+        }
+      </ul>
+    </div>
 
-export default FilterGenres;
+  )
+}
+
+export default FilterGenres

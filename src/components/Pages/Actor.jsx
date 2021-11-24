@@ -1,9 +1,11 @@
-import React, {useEffect, useState} from 'react';
-import {apiMethod} from "../../api/api";
-import {Link, useParams} from "react-router-dom";
-import MoviesList from "../Movies/MoviesList";
-import PageLoader from "../UI/Loaders/PageLoader";
-import ButtonToHome from "../UI/Buttons/ButtonToHome";
+import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
+
+import { apiMethod } from '../../api/api'
+
+import MoviesList from '../Movies/MoviesList'
+import PageLoader from '../UI/Loaders/PageLoader'
+import ToHomeButton from '../UI/Buttons/ToHomeButton'
 
 const Actor = () => {
   const [actorMovies, setActorMovies] = useState(null)
@@ -13,9 +15,7 @@ const Actor = () => {
   const { actorId } = useParams()
 
   useEffect(() => {
-    // getActorInfo(actorId, setActorInfo)
-    // getActorFilms(actorId, setActorMovies, setError, setIsLoaded)
-    apiMethod('movie', actorId, setActorInfo, 'credits')
+    apiMethod('person', actorId, setActorInfo)
     apiMethod('person', actorId, setActorMovies,'/movie_credits', setError, setIsLoaded)
   }, [])
 
@@ -36,9 +36,9 @@ const Actor = () => {
       </h2>
       <MoviesList movies={actorMovies.cast}/>
 
-      <ButtonToHome/>
+      <ToHomeButton/>
     </div>
   )
-};
+}
 
-export default Actor;
+export default Actor

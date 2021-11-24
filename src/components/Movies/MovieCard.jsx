@@ -1,5 +1,5 @@
-import React, {useEffect} from 'react';
-import {Link} from "react-router-dom";
+import React from 'react'
+import { Link } from 'react-router-dom'
 
 import noPoster from '../../img/Question_mark.svg'
 
@@ -34,7 +34,6 @@ const MovieCard = ({ movie }) => {
   const green = 250 * movie.vote_average / 10
   const voteColor = `rgb(${250 - green}, ${green}, 0)`
 
-
   return (
     <>
       <div className='movie-card__link'>
@@ -49,7 +48,7 @@ const MovieCard = ({ movie }) => {
 
       <p className='movie-card__date'>{ dateCalculate(movie.release_date) }</p>
     </>
-  );
-};
+  )
+}
 
-export default MovieCard;
+export default MovieCard

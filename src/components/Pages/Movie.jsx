@@ -5,7 +5,7 @@ import MovieInfo from "../MovieInfo/MovieInfo";
 import MovieActors from "../MovieInfo/MovieActors";
 import MoviesList from "../Movies/MoviesList";
 import PageLoader from "../UI/Loaders/PageLoader";
-import ButtonToHome from "../UI/Buttons/ButtonToHome";
+import ToHomeButton from "../UI/Buttons/ToHomeButton";
 
 
 
@@ -50,7 +50,7 @@ const Movie = () => {
           )
           : null
       }
-      <ButtonToHome/>
+      <ToHomeButton/>
     </div>
   )
 };

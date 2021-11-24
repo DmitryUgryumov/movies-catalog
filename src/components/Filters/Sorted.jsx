@@ -1,5 +1,5 @@
-import React, {useEffect} from 'react';
-import {getMoviesList} from "../../api/api";
+import React from 'react'
+import  {getMoviesList } from '../../api/api'
 
 const Sorted = ({ sortedList, setSortedList, setSortedActive, setIsLoaded, setPage, setMovies, setError, genresActive, dateActive }) => {
   const changeSort = e => {
@@ -10,7 +10,8 @@ const Sorted = ({ sortedList, setSortedList, setSortedActive, setIsLoaded, setPa
         : {...item, checked: false}
       ))
 
-    sessionStorage.setItem('sorted', newSorted)
+    sessionStorage.setItem('sorted', JSON.stringify(newSorted))
+    sessionStorage.setItem('scroll', JSON.stringify(0))
 
     setSortedActive(newSorted)
     setIsLoaded(false)
@@ -20,18 +21,21 @@ const Sorted = ({ sortedList, setSortedList, setSortedActive, setIsLoaded, setPa
   }
 
   return (
-    <ul className='sorted__ul'>
-      {
-        sortedList.map(item => (
-            <li key={item.id} className='sorted__li'>
-              <input id={item.id} type="radio" name='sorted' value={item.requestValue} checked={item.checked} onChange={changeSort}/>
-              <label htmlFor={item.id}>{item.description}</label>
-            </li>
+    <div className='sorted'>
+      <p className='sorted__title'>Soring by: </p>
+      <ul className='sorted__ul'>
+        {
+          sortedList.map(item => (
+              <li key={item.id} className='sorted__li'>
+                <input id={item.id} type="radio" name='sorted' value={item.requestValue} checked={item.checked} onChange={changeSort}/>
+                <label htmlFor={item.id}>{item.description}</label>
+              </li>
+            )
           )
-        )
-      }
-    </ul>
-  );
-};
+        }
+      </ul>
+    </div>
+  )
+}
 
-export default Sorted;
+export default Sorted

@@ -1,8 +1,8 @@
-import React, {useEffect} from 'react';
-import {getMoviesList, getTest} from "../../api/api";
+import React from 'react'
+import { getMoviesList } from '../../api/api'
 
 const FilterDate = ({ dateList, setDateList, setDateActive, setIsLoaded, setPage, setMovies, setError, genresActive, sortedActive }) => {
-  const [selectedValue, setSelectedValue] = dateList.filter(date => date.checked)
+  const [selectedValue] = dateList.filter(date => date.checked)
 
   const changeDateFilter = e => {
     const newDate = e.target.selectedOptions[0].value
@@ -12,7 +12,8 @@ const FilterDate = ({ dateList, setDateList, setDateActive, setIsLoaded, setPage
       : { ...date, checked: false }
     ))
 
-    sessionStorage.setItem('date', newDate)
+    sessionStorage.setItem('date', JSON.stringify(newDate))
+    sessionStorage.setItem('scroll', JSON.stringify(0))
 
     setDateActive(newDate)
     setIsLoaded(false)
@@ -23,16 +24,20 @@ const FilterDate = ({ dateList, setDateList, setDateActive, setIsLoaded, setPage
 
 
   return (
-    <select className='release-date__select' name="date" onChange={changeDateFilter} value={selectedValue.requestValue}>
-      {
-        dateList.map(date =>
-          <option className='release-date__option' value={date.requestValue} key={date.id}>
-            {date.description}
-          </option>
-        )
-      }
-    </select>
-  );
-};
+    <div className='release-date'>
+      <p className='release-date__title'>Release date: </p>
+      <select className='release-date__select' name="date" onChange={changeDateFilter} value={selectedValue.requestValue}>
+        {
+          dateList.map(date =>
+            <option className='release-date__option' value={date.requestValue} key={date.id}>
+              {date.description}
+            </option>
+          )
+        }
+      </select>
+    </div>
 
-export default FilterDate;
+  )
+}
+
+export default FilterDate

@@ -1,9 +1,10 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {apiMethod} from "../../api/api";
+import React, { useEffect, useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
 
+import { apiMethod } from '../../api/api'
 import noPoster from '../../img/Question_mark.svg'
-import {Link} from "react-router-dom";
-import PageItemLoader from "../UI/Loaders/PageItemLoader";
+
+import PageItemLoader from '../UI/Loaders/PageItemLoader'
 
 const MovieActors = ({ movieId }) => {
   const [actors, setActors] = useState({})
@@ -12,10 +13,7 @@ const MovieActors = ({ movieId }) => {
   const list = useRef(null)
   const buttonTriangle = useRef(null)
 
-  useEffect(() => {
-    // getActors(movieId, setActors, setError, setIsLoaded)
-    apiMethod('movie', movieId, setActors, '/credits', setError, setIsLoaded)
-  }, [movieId])
+  useEffect(() => apiMethod('movie', movieId, setActors, '/credits', setError, setIsLoaded), [movieId])
 
   function changeListHeight() {
     const listStyles = getComputedStyle(list.current)
@@ -60,6 +58,6 @@ const MovieActors = ({ movieId }) => {
     </div>
 
   )
-};
+}
 
-export default MovieActors;
+export default MovieActors
