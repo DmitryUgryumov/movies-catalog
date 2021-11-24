@@ -6,6 +6,7 @@ import { apiMethod } from '../../api/api'
 import MoviesList from '../Movies/MoviesList'
 import PageLoader from '../UI/Loaders/PageLoader'
 import ToHomeButton from '../UI/Buttons/ToHomeButton'
+import PageItemLoader from "../UI/Loaders/PageItemLoader";
 
 const Actor = () => {
   const [actorMovies, setActorMovies] = useState(null)

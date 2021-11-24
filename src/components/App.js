@@ -11,15 +11,19 @@ function App() {
     <>
       <Switch>
 
+        {/*<Route exact path='/catalog/:pageId'>*/}
+        {/*  <MoviesCatalog/>*/}
+        {/*</Route>*/}
+
         <Route exact path='/'>
           <MoviesCatalog/>
         </Route>
 
-        <Route exact path='/movie/:movieId'>
+        <Route path='/movie/:movieId'>
           <Movie />
         </Route>
 
-        <Route exact path='/actor/:actorId'>
+        <Route path='/actor/:actorId'>
           <Actor />
         </Route>
 

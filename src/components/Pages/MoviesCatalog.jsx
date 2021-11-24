@@ -44,7 +44,7 @@ const MoviesCatalog = () => {
   const pageNext = () => {
     setPage(prev => prev + 1)
     getMoviesList(page + 1, sortedActive, setMovies, setError, setIsLoaded, genresActive, dateActive)
-    document.documentElement.scrollTop = 0
+    document.documentElement.scrollTop = 0 // sessionStorage.setItem('scroll', JSON.stringify(0))
   }
 
   const pagePrev = () => {

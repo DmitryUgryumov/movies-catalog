@@ -54,6 +54,7 @@ export function getMoviesList(page , sorted, setMovies, setError, setIsLoaded, .
         : Promise.reject(data.statusText)
     )
     .then(json => {
+      console.log(json)
       setMovies(json)
       setIsLoaded(true)
       setError(false)
@@ -74,6 +75,7 @@ export function apiMethod(option, id, setState, credits='', setError='', setIsLo
         : Promise.reject(data.statusText)
     )
     .then(json => {
+      console.log(json)
       setState(json)
       if (setIsLoaded && setError) {
         setIsLoaded(true)

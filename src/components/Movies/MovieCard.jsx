@@ -30,7 +30,9 @@ const dateCalculate = date => {
 }
 
 const MovieCard = ({ movie }) => {
-  const poster = movie.poster_path ? `https://image.tmdb.org/t/p/original/${movie.poster_path}` : noPoster
+  // const poster = movie.poster_path ? `https://image.tmdb.org/t/p/original/${movie.poster_path}` : noPoster
+  const poster = movie.poster_path ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}` : noPoster
+
   const green = 250 * movie.vote_average / 10
   const voteColor = `rgb(${250 - green}, ${green}, 0)`
 
