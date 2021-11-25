@@ -20,7 +20,9 @@ const monthNames = {
 //property check functions:
 const checkStr = property => property ? property : '—'
 
-const checkArr = arr => Array.isArray(arr) && arr.length ? arr.map(item => <span className='info__span' key={item.id || item.name}>{item.name}</span>) : '—'
+const checkArr = arr => Array.isArray(arr) && arr.length
+  ? arr.map(item => <span className='info__span' key={item.id || item.name}>{ item.name }</span>)
+  : '—'
 
 //calculate functions:
 const timeCalculate = time => time ? `${Math.floor(time / 60)}h ${time % 60}min` : '—'
@@ -38,15 +40,15 @@ const dateCalculate = date => {
   return '—'
 }
 
-
 const MovieInfo = ({ movie }) => {
   const poster = movie.poster_path ? `https://image.tmdb.org/t/p/original/${movie.poster_path}` : noPoster
 
   return (
     <div className='movie__info info'>
       <div className='info__img'>
-        <img src={poster} alt="movie" className='info__poster'/>
+        <img src={poster} alt='movie' className='info__poster'/>
       </div>
+
       <div className='info__description'>
         <p className='info__title'>{ movie.title }</p>
         {
@@ -93,12 +95,12 @@ const MovieInfo = ({ movie }) => {
 
           <li className='info__li'>
             <p>Realise date:</p>
-            <p className='info__runtime'>{ dateCalculate(movie.release_date) }</p>
+            <p className='info__release_date'>{ dateCalculate(movie.release_date) }</p>
           </li>
 
           <li className='info__li'>
             <p>Status:</p>
-            <p className='info__runtime'>{ checkStr(movie.status) }</p>
+            <p className='info__status'>{ checkStr(movie.status) }</p>
           </li>
 
         </ul>

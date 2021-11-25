@@ -1,13 +1,14 @@
 import React from 'react'
-import  {getMoviesList } from '../../api/api'
+
+import  { getMoviesList } from '../../api/api'
 
 const Sorted = ({ sortedList, setSortedList, setSortedActive, setIsLoaded, setPage, setMovies, setError, genresActive, dateActive }) => {
   const changeSort = e => {
     const newSorted = sortedList.filter(item => item.id.toString() === e.target.id)[0].requestValue
 
     setSortedList(prev => prev.map(item => item.requestValue === newSorted
-        ? {...item, checked: true}
-        : {...item, checked: false}
+        ? { ...item, checked: true }
+        : { ...item, checked: false }
       ))
 
     sessionStorage.setItem('sorted', JSON.stringify(newSorted))
@@ -25,12 +26,11 @@ const Sorted = ({ sortedList, setSortedList, setSortedActive, setIsLoaded, setPa
       <p className='sorted__title'>Soring by: </p>
       <ul className='sorted__ul'>
         {
-          sortedList.map(item => (
-              <li key={item.id} className='sorted__li'>
-                <input id={item.id} type="radio" name='sorted' value={item.requestValue} checked={item.checked} onChange={changeSort}/>
-                <label htmlFor={item.id}>{item.description}</label>
-              </li>
-            )
+          sortedList.map(sort =>
+            <li key={sort.id} className='sorted__li'>
+              <input id={sort.id} type="radio" name='sorted' value={sort.requestValue} checked={sort.checked} onChange={changeSort}/>
+              <label htmlFor={sort.id}>{ sort.description }</label>
+            </li>
           )
         }
       </ul>

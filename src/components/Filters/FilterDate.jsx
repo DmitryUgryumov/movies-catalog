@@ -1,4 +1,5 @@
 import React from 'react'
+
 import { getMoviesList } from '../../api/api'
 
 const FilterDate = ({ dateList, setDateList, setDateActive, setIsLoaded, setPage, setMovies, setError, genresActive, sortedActive }) => {
@@ -22,21 +23,19 @@ const FilterDate = ({ dateList, setDateList, setDateActive, setIsLoaded, setPage
     getMoviesList(1, sortedActive, setMovies, setError, setIsLoaded, genresActive, newDate)
   }
 
-
   return (
     <div className='release-date'>
       <p className='release-date__title'>Release date: </p>
-      <select className='release-date__select' name="date" onChange={changeDateFilter} value={selectedValue.requestValue}>
+      <select className='release-date__select' name='date' onChange={changeDateFilter} value={selectedValue.requestValue}>
         {
           dateList.map(date =>
             <option className='release-date__option' value={date.requestValue} key={date.id}>
-              {date.description}
+              { date.description }
             </option>
           )
         }
       </select>
     </div>
-
   )
 }
 

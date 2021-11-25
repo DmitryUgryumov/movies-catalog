@@ -30,7 +30,6 @@ const dateCalculate = date => {
 }
 
 const MovieCard = ({ movie }) => {
-  // const poster = movie.poster_path ? `https://image.tmdb.org/t/p/original/${movie.poster_path}` : noPoster
   const poster = movie.poster_path ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}` : noPoster
 
   const green = 250 * movie.vote_average / 10
@@ -40,11 +39,13 @@ const MovieCard = ({ movie }) => {
     <>
       <div className='movie-card__link'>
         <Link to={`/movie/${movie.id}`}>
+
           <div className='movie-card__img-container' >
-            <img src={poster} alt='movie' className='movie-card__poster'/>
+            <img src={poster} alt='movie' className='movie-card__poster' />
             <p className='movie-card__vote-average' style={{ borderColor:voteColor }}>{ movie.vote_average }</p>
           </div>
           <p className='movie-card__title'>{ movie.title }</p>
+
         </Link>
       </div>
 

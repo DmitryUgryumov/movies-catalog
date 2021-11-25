@@ -7,13 +7,13 @@ import noPoster from '../../img/Question_mark.svg'
 import PageItemLoader from '../UI/Loaders/PageItemLoader'
 
 const MovieActors = ({ movieId }) => {
-  const [actors, setActors] = useState({})
+  const [actors, setActors] = useState([])
   const [error, setError] = useState(false)
   const [isLoaded, setIsLoaded] = useState(false)
   const list = useRef(null)
   const buttonTriangle = useRef(null)
 
-  useEffect(() => apiMethod('movie', movieId, setActors, '/credits', setError, setIsLoaded), [movieId])
+  useEffect(() => apiMethod(`movie/${movieId}/credits`, setActors, setError, setIsLoaded), [movieId])
 
   function changeListHeight() {
     const listStyles = getComputedStyle(list.current)
@@ -27,7 +27,7 @@ const MovieActors = ({ movieId }) => {
   if (error) {
     return <div className='error'>Error: {error}</div>
   } else if (!isLoaded) {
-    return <div className='loading'> <PageItemLoader/> </div>
+    return <div className='loading'> <PageItemLoader /> </div>
   }
 
   return (
@@ -39,8 +39,8 @@ const MovieActors = ({ movieId }) => {
 
       <ul className='actors__list' ref={list}>
         {
-          actors.cast.slice(0, 12).map(actor => {
-            return (
+          actors.cast.slice(0, 12).map(actor =>
+            (
               <li key={actor.id} className='actors__li'>
                 <Link to={`/actor/${actor.id}`}>
                   <img src={ actor.profile_path ? `https://image.tmdb.org/t/p/original/${actor.profile_path}` : noPoster }
@@ -50,13 +50,11 @@ const MovieActors = ({ movieId }) => {
                   <p className='actors__name'>{ actor.name }</p>
                 </Link>
               </li>
-            )
-          })
+            ))
         }
       </ul>
 
     </div>
-
   )
 }
 

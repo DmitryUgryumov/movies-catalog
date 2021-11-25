@@ -9,12 +9,11 @@ const MoviesList = ({ movies }) => {
         movies.length
           ? movies.map(movieItem =>
             <li className='movies__item movie-card' key={movieItem.id}>
-              <MovieCard movie={movieItem}/>
+              <MovieCard movie={movieItem} />
             </li>
           )
           : <div>No film</div>
       }
-
     </ul>
   )
 }

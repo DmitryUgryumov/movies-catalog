@@ -1,19 +1,15 @@
 import { Switch, Route } from 'react-router-dom'
 
+import '../stylessheets/index.css'
+
 import MoviesCatalog from './Pages/MoviesCatalog'
 import Movie from './Pages/Movie'
 import Actor from './Pages/Actor'
-
-import '../stylessheets/index.css'
 
 function App() {
   return (
     <>
       <Switch>
-
-        {/*<Route exact path='/catalog/:pageId'>*/}
-        {/*  <MoviesCatalog/>*/}
-        {/*</Route>*/}
 
         <Route exact path='/'>
           <MoviesCatalog/>

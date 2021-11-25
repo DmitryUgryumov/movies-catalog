@@ -328,7 +328,7 @@ html {
 
 .actors__poster {
   width: 100%;
-  height: auto;
+  max-height: 380px;
 }
 
 .actors__name {
@@ -340,6 +340,7 @@ html {
   background: black;
   transition: all 0.4s;
 }
+
 .actor {
   max-width: 1200px;
   margin: 30px auto 0;

@@ -6,24 +6,23 @@ import { apiMethod } from '../../api/api'
 import MoviesList from '../Movies/MoviesList'
 import PageLoader from '../UI/Loaders/PageLoader'
 import ToHomeButton from '../UI/Buttons/ToHomeButton'
-import PageItemLoader from "../UI/Loaders/PageItemLoader";
 
 const Actor = () => {
-  const [actorMovies, setActorMovies] = useState(null)
-  const [actorInfo, setActorInfo] = useState('')
+  const [actorMovies, setActorMovies] = useState([])
+  const [actorInfo, setActorInfo] = useState(null)
   const [error, setError] = useState(false)
   const [isLoaded, setIsLoaded] = useState(false)
   const { actorId } = useParams()
 
   useEffect(() => {
-    apiMethod('person', actorId, setActorInfo)
-    apiMethod('person', actorId, setActorMovies,'/movie_credits', setError, setIsLoaded)
+    apiMethod(`person/${actorId}`, setActorInfo)
+    apiMethod(`person/${actorId}/movie_credits`, setActorMovies, setError, setIsLoaded)
   }, [])
 
   if (error) {
     return <div className='error'>Error: {error}</div>
   } else if (!isLoaded) {
-    return <div className='loading'> <PageLoader/> </div>
+    return <div className='loading'> <PageLoader /> </div>
   }
 
   return (
@@ -37,7 +36,7 @@ const Actor = () => {
       </h2>
       <MoviesList movies={actorMovies.cast}/>
 
-      <ToHomeButton/>
+      <ToHomeButton />
     </div>
   )
 }

@@ -22,23 +22,28 @@ export const genresArr = [
 ]
 
 export const dateArr = [
-  {id: 1, description: 'all years', requestValue: '', checked: true},
+  {id: 1, description: 'all years', requestValue: '', checked: true},//default date
   {id: 2, description: '2020-', requestValue: 'primary_release_date.gte=2020-01-01', checked: false},
-  ...[...new Array(6)].map((year, ind) => {
-    return { id: ind + 3, description: `${2010 - 10*ind} - ${2020 - 10*ind}`, requestValue: `primary_release_date.gte=${2010 - 10*ind}-01-01&primary_release_date.lte=${2020 - 1 - 10*ind}-12-30`, checked: false }
-  })
+  ...[...new Array(10)].map((year, ind) => ({
+      id: ind + 3,
+      description: `${2010 - 10*ind} - ${2020 - 10*ind}`,
+      requestValue: `primary_release_date.gte=${2010 - 10*ind}-01-01&primary_release_date.lte=${2020 - 1 - 10*ind}-12-30`,
+      checked: false
+    }
+  ))
 ]
 
 export const sortedArr = [
-  {id: 1, description: 'Popularity', requestValue: 'popularity.desc&vote_count.gte=50', checked: true}, //default sorting
+  {id: 1, description: 'Popularity', requestValue: 'popularity.desc&vote_count.gte=50', checked: true},//default sorting
   {id: 2, description: 'Vote average', requestValue: 'vote_average.desc&vote_count.gte=1000', checked: false},
   {id: 3, description: 'Vote count', requestValue: 'vote_count.desc&vote_count.gte=50', checked: false},
   {id: 4, description: 'Release date', requestValue: `primary_release_date.desc&vote_count.gte=50`, checked: false}
 ]
 
-
 export function getMoviesList(page , sorted, setMovies, setError, setIsLoaded, ...filters) {
-  let movieFilters = filters.filter(filt => filt)
+  console.log(filters)
+
+  let movieFilters = filters.filter(filterItem => filterItem)
 
   if (movieFilters.length) {
     movieFilters = `&${movieFilters.join('&')}&`
@@ -47,14 +52,10 @@ export function getMoviesList(page , sorted, setMovies, setError, setIsLoaded, .
   }
 
   const URL = `http://api.themoviedb.org/3/discover/movie?page=${page}${movieFilters || '&'}sort_by=${sorted}&api_key=${API_KEY}`
+
   fetch(URL)
-    .then(data =>
-      data.ok
-        ? data.json()
-        : Promise.reject(data.statusText)
-    )
+    .then(data => data.ok ? data.json() : Promise.reject(data.statusText))
     .then(json => {
-      console.log(json)
       setMovies(json)
       setIsLoaded(true)
       setError(false)
@@ -65,17 +66,12 @@ export function getMoviesList(page , sorted, setMovies, setError, setIsLoaded, .
     })
 }
 
-export function apiMethod(option, id, setState, credits='', setError='', setIsLoaded='') {
-  const URL = `https://api.themoviedb.org/3/${option}/${id}${credits}?&api_key=${API_KEY}`
+export function apiMethod(queryString, setState, setError='', setIsLoaded='') {
+  const URL = `https://api.themoviedb.org/3/${queryString}?api_key=${API_KEY}`
 
   fetch(URL)
-    .then(data =>
-      data.ok
-        ? data.json()
-        : Promise.reject(data.statusText)
-    )
+    .then(data => data.ok ? data.json() : Promise.reject(data.statusText))
     .then(json => {
-      console.log(json)
       setState(json)
       if (setIsLoaded && setError) {
         setIsLoaded(true)
