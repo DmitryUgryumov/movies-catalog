@@ -68,8 +68,12 @@ export function apiMethod(queryString, setState, setError='', setIsLoaded='') {
   const URL = `https://api.themoviedb.org/3/${queryString}?api_key=${API_KEY}`
 
   fetch(URL)
-    .then(data => data.ok ? data.json() : Promise.reject(data.statusText))
+    .then(data => {
+      console.log(data)
+      return data.ok ? data.json() : Promise.reject(data.statusText)
+    })
     .then(json => {
+      console.log(true)
       setState(json)
       if (setIsLoaded && setError) {
         setIsLoaded(true)
@@ -77,9 +81,10 @@ export function apiMethod(queryString, setState, setError='', setIsLoaded='') {
       }
     })
     .catch(err => {
+      console.log(false)
       if (setIsLoaded && setError) {
+        setError('Not found')
         setIsLoaded(true)
-        setError(err)
       }
     })
 }
