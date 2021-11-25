@@ -11,7 +11,7 @@ function App() {
     <>
       <Switch>
 
-        <Route exact path='/'>
+        <Route exact path='/movies-catalog'>
           <MoviesCatalog/>
         </Route>
 

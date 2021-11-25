@@ -41,8 +41,6 @@ export const sortedArr = [
 ]
 
 export function getMoviesList(page , sorted, setMovies, setError, setIsLoaded, ...filters) {
-  console.log(filters)
-
   let movieFilters = filters.filter(filterItem => filterItem)
 
   if (movieFilters.length) {
@@ -51,7 +49,7 @@ export function getMoviesList(page , sorted, setMovies, setError, setIsLoaded, .
     movieFilters = ''
   }
 
-  const URL = `http://api.themoviedb.org/3/discover/movie?page=${page}${movieFilters || '&'}sort_by=${sorted}&api_key=${API_KEY}`
+  const URL = `https://api.themoviedb.org/3/discover/movie?page=${page}${movieFilters || '&'}sort_by=${sorted}&api_key=${API_KEY}`
 
   fetch(URL)
     .then(data => data.ok ? data.json() : Promise.reject(data.statusText))
