@@ -13,9 +13,7 @@ const Actor = () => {
   const [error, setError] = useState(false)
   const [isLoaded, setIsLoaded] = useState(false)
   const { actorId } = useParams()
-
-  useEffect(() => console.log(error))
-
+  
   useEffect(() => {
     apiMethod(`person/${actorId}`, setActorInfo)
     apiMethod(`person/${actorId}/movie_credits`, setActorMovies, setError, setIsLoaded)
