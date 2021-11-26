@@ -1,4 +1,4 @@
-import { Switch, Route } from 'react-router-dom'
+import { Route, HashRouter } from 'react-router-dom'
 
 import '../stylessheets/index.css'
 
@@ -9,10 +9,10 @@ import Actor from './Pages/Actor'
 function App() {
   return (
     <>
-      <Switch>
+      <HashRouter basename='/'>
 
-        <Route exact path='/movies-catalog'>
-          <MoviesCatalog/>
+        <Route exact path='/'>
+          <MoviesCatalog />
         </Route>
 
         <Route path='/movie/:movieId'>
@@ -23,7 +23,7 @@ function App() {
           <Actor />
         </Route>
 
-      </Switch>
+      </HashRouter>
     </>
   )
 }

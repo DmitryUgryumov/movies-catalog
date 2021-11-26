@@ -13,7 +13,7 @@ const Actor = () => {
   const [error, setError] = useState(false)
   const [isLoaded, setIsLoaded] = useState(false)
   const { actorId } = useParams()
-  
+
   useEffect(() => {
     apiMethod(`person/${actorId}`, setActorInfo)
     apiMethod(`person/${actorId}/movie_credits`, setActorMovies, setError, setIsLoaded)
@@ -27,6 +27,7 @@ const Actor = () => {
 
   return (
     <div className='actor'>
+
       <h2 className='actor__title'>Film with:
         <span className='actor__name'>
           {
@@ -34,7 +35,8 @@ const Actor = () => {
           }
         </span>
       </h2>
-      <MoviesList movies={actorMovies.cast}/>
+
+      <MoviesList movies={actorMovies.cast} />
 
       <ToHomeButton />
     </div>
