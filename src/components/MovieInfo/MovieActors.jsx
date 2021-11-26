@@ -23,7 +23,6 @@ const MovieActors = ({ movieId }) => {
     buttonTriangle.current.innerHTML = buttonTriangle.current.innerHTML === '▶' ? '▼' : '▶'
   }
 
-
   if (error) {
     return <div className='error'>Error: {error}</div>
   } else if (!isLoaded) {
@@ -40,17 +39,16 @@ const MovieActors = ({ movieId }) => {
       <ul className='actors__list' ref={list}>
         {
           actors.cast.slice(0, 12).map(actor =>
-            (
               <li key={actor.id} className='actors__li'>
                 <Link to={`/actor/${actor.id}`}>
-                  <img src={ actor.profile_path ? `https://image.tmdb.org/t/p/original/${actor.profile_path}` : noPoster }
+                  <img src={ actor.profile_path ? `https://image.tmdb.org/t/p/w500/${actor.profile_path}` : noPoster }
                        alt='actor'
                        className='actors__poster'
                   />
                   <p className='actors__name'>{ actor.name }</p>
                 </Link>
               </li>
-            ))
+            )
         }
       </ul>
 

@@ -1,8 +1,7 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 import home from '../../../img/Home.png'
-
-import { Link } from 'react-router-dom'
 
 const ToHomeButton = () => {
   return (

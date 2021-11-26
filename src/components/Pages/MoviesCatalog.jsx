@@ -16,8 +16,8 @@ const checkProperty = (key, nonKeyValue='') => sessionStorage.getItem(key)
   : nonKeyValue
 
 const initialStateFilter = (filtersArr, typeFilter, filterActive) => typeFilter === 'radio'
-  ? filtersArr.map(item => item.requestValue === filterActive ? { ...item, checked:true } : { ...item, checked:false })
-  : filtersArr.map(item => filterActive.includes(item.requestValue) ? { ...item, checked:true } : { ...item, checked:false })
+  ? filtersArr.map(item => item.requestValue === filterActive ? { ...item, checked: true } : { ...item, checked: false })
+  : filtersArr.map(item => filterActive.includes(item.requestValue) ? { ...item, checked: true } : { ...item, checked: false })
 
 
 const MoviesCatalog = () => {

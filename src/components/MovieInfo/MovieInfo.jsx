@@ -106,8 +106,7 @@ const MovieInfo = ({ movie }) => {
         </ul>
       </div>
     </div>
+  )
+}
 
-  );
-};
-
-export default MovieInfo;
+export default MovieInfo
