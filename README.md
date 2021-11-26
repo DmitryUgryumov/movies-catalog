@@ -1,5 +1,5 @@
+# Open [Demo](https://dmitryugryumov.github.io/movies-catalog/) to view it in the browser.
 
-https://dmitryugryumov.github.io/movies-catalog/
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
