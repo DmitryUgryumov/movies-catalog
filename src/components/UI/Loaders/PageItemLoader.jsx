@@ -1,9 +1,9 @@
-import React from 'react'
+import React from "react";
 
 const PageItemLoader = () => {
   return (
-    <div className='page-item-loader'>
-      <div className='lds-spinner'>
+    <div className="page-item-loader">
+      <div className="lds-spinner">
         <div></div>
         <div></div>
         <div></div>
@@ -18,7 +18,7 @@ const PageItemLoader = () => {
         <div></div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default PageItemLoader
+export default PageItemLoader;

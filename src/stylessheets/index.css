@@ -205,7 +205,6 @@ html {
   padding: 0 20px;
   align-items: center;
 }
-
 .info__span + .info__span {
   display: inline-block;
 }
