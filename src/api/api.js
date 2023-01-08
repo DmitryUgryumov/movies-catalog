@@ -100,7 +100,7 @@ export function getMoviesList(
     })
     .catch((err) => {
       setIsLoaded(true);
-      setError(err);
+      setError(err.toString());
     });
 }
 

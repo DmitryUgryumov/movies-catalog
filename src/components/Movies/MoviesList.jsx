@@ -3,7 +3,7 @@ import React from "react";
 import MovieCard from "./MovieCard";
 
 const MoviesList = ({ movies }) => {
-  if (movies.length) {
+  if (movies?.length) {
     return (
       <ul className="movies__list">
         {movies.map((movieItem) => (
